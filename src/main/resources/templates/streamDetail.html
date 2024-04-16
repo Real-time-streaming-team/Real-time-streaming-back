@@ -29,6 +29,7 @@
     function connect() {
         var socket = new SockJS('http://158.247.240.142:8080/chat');
         stompClient = Stomp.over(socket);
+
         stompClient.connect({}, function(frame) {
             subscribeUrl = "/stream/" + streamId
             console.log('Connected: ' + frame);
