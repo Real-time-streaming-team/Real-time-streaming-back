@@ -18,7 +18,7 @@ public class FirstFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        res.addHeader("Access-Control-Allow-Origin", "*");
+        res.addHeader("Access-Control-Allow-Origin", "http://158.247.240.142:3000/");
         chain.doFilter(req, res);
     }
 }
