@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
-                .allowedOriginPatterns("http://158.247.240.142:3000")
+                .allowedOriginPatterns("*")
                 .allowCredentials(true)
                 .allowedMethods("*")
                 .allowedHeaders("*")
