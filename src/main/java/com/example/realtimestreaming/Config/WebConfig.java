@@ -11,12 +11,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-
         registry.addMapping("/**")
-                .allowedOriginPatterns("http://158.247.240.142:3000")
-                .allowCredentials(true)
+                .allowedOrigins("http://158.247.240.142:3000") // 클라이언트 출처를 여기에 명시
                 .allowedMethods("*")
                 .allowedHeaders("*")
+                .allowCredentials(true)
                 .maxAge(3600);
     }
 }
