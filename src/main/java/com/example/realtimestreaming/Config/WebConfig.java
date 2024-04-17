@@ -12,10 +12,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
-        //  Set routes that allow cross domain routing
         registry.addMapping("/**")
-                .allowedOriginPatterns("*")
-//                .allowCredentials(true)
+                .allowedOrigins("http://158.247.240.142:3000")
+                .allowCredentials(true)
                 .allowedMethods("*")
                 .maxAge(3600);
     }
