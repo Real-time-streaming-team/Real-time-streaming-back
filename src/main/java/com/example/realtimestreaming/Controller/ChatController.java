@@ -10,6 +10,6 @@ public class ChatController {
     @GetMapping("/info")
     public String handleInfoRequest(@RequestParam("t") String timestamp) {
         // t 매개변수를 사용하여 필요한 처리를 수행
-        return "Received timestamp: " + timestamp;
+        return "streamDetail.html";
     }
 }
