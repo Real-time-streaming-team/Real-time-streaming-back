@@ -16,6 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns("http://158.247.240.142:3000")
                 .allowCredentials(true)
                 .allowedMethods("*")
+                .allowedHeaders("*")
                 .maxAge(3600);
     }
 }
