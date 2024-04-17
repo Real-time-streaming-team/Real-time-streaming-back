@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // STOMP 엔드포인트 등록
         registry
                 .addEndpoint("/chat/info")
-                .setAllowedOrigins("*") // 허용된 오리진 설정
+                .setAllowedOrigins("http://158.247.240.142:3000") // 허용된 오리진 설정
                 .withSockJS();
     }
 }
