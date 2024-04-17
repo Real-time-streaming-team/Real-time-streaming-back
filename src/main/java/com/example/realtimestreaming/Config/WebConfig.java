@@ -5,14 +5,14 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfㅎig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*") // 모든 출처 허용
                 .allowedMethods("*")
-                .allowedHeaders("*") // 여기에 추가
+                .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
