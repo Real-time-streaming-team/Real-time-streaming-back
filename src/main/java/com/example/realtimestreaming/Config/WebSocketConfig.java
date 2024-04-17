@@ -12,12 +12,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-//        config.enableSimpleBroker("/topic");
-//        config.setApplicationDestinationPrefixes("/app");
+        // 메시지 브로커 구성
+        // config.enableSimpleBroker("/topic");
+        // config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat").setAllowedOrigins("*").withSockJS();
+        // STOMP 엔드포인트 등록
+        registry
+                .addEndpoint("/chat")
+                .setAllowedOrigins("http://localhost:3000") // 허용된 오리진 설정
+                .withSockJS();
     }
 }
