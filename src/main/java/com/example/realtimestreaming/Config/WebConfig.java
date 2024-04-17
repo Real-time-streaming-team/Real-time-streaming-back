@@ -14,15 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
 
         //  Set routes that allow cross domain routing
         registry.addMapping("/**")
-                //  Set the domain name that allows cross domain requests
-                //.allowedOrigins("*")
-                // Cross domain configuration error , take .allowedOrigins Replace with .allowedOriginPatterns that will do .
                 .allowedOriginPatterns("*")
-                //  Whether to allow certificates （cookies）
-                .allowCredentials(true)
-                //  Set allowed methods
+//                .allowCredentials(true)
                 .allowedMethods("*")
-                //  Cross domain allow time
                 .maxAge(3600);
     }
 }
