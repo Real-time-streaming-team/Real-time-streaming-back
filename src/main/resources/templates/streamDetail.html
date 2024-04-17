@@ -27,7 +27,7 @@
 
     // 서버에 WebSocket 연결하는 함수
     function connect() {
-        var socket = new SockJS('http://localhost:8080/chat');
+        var socket = new SockJS("/chat");
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function(frame) {
