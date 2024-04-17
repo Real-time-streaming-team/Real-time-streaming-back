@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/chat")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ChatController {
     @GetMapping("/info")
     public String handleInfoRequest(@RequestParam("t") String timestamp) {

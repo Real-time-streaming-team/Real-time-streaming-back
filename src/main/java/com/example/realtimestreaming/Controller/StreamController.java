@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/stream")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "스트리밍 API", description = "스트리밍 API입니다")
 public class StreamController {
 
