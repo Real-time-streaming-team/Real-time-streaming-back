@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CustomErrorResponse> handleUserApplicationException(UserApplicationException e) {
         ErrorCode errorCode = e.getErrorCode();
         CustomErrorResponse errorResponse = new CustomErrorResponse(errorCode.getCode(), errorCode.getStatus(), errorCode.getMessage());
-        System.out.println(errorCode.getMessage())g;
+        System.out.println(errorCode.getMessage());
         return ResponseEntity.status(errorCode.getStatus()).body(errorResponse);
     }
 }
