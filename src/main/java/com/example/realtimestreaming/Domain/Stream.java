@@ -11,7 +11,7 @@ public class Stream {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long streamId;
 
     private String title;
 
