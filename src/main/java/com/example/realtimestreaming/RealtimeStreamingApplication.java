@@ -12,5 +12,5 @@ public class RealtimeStreamingApplication {
 		SpringApplication.run(RealtimeStreamingApplication.class, args);
 	}
 
-	// jenkins 실험g
+	// jenkins 실험g123
 }
