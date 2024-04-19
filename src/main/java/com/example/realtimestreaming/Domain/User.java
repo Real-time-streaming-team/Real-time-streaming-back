@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@Builder
 public class User {
 
     @Id
@@ -20,11 +21,11 @@ public class User {
     private String nickname;
 
     @Column(name = "email")
-    private String email;
+    private String emaail;
 
     @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
-    private List<Stream> streams = new ArrayList<>();
+    private final List<Stream> streams = new ArrayList<>();
 }
