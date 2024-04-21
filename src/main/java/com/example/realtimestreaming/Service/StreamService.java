@@ -1,8 +1,6 @@
 package com.example.realtimestreaming.Service;
 
-import com.example.realtimestreaming.Domain.Stream;
-import com.example.realtimestreaming.Domain.User;
-import com.example.realtimestreaming.Dto.Request.Stream.SendChatReq;
+import com.example.realtimestreaming.Dto.Request.Stream.SendChatRequestDto;
 import com.example.realtimestreaming.Repository.StreamRepository;
 import com.example.realtimestreaming.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,9 @@ public class StreamService {
     @Autowired
     UserRepository userRepository;
 
-    public void sendMessage(SendChatReq sendChatReq, Long streamId) {
+    public void sendMessage(SendChatRequestDto sendChatRequestDto, Long streamId) {
         // 유저 존재 확인
-        userRepository.findByUserId(sendChatReq.getUserId());
+        userRepository.findByUserId(sendChatRequestDto.getUserId());
 
         System.out.println("어디서 오류가 나는거냐");
 
