@@ -15,29 +15,3 @@ import java.util.List;
 public interface StreamRepository extends JpaRepository<Stream, Long> {
     List<Stream> findByStreamId(Long streamId);
 }
-
-
-//@Repository
-//public class StreamRepository {
-//
-//    @PersistenceContext
-//    EntityManager em;
-//
-//    public void save (Stream stream) {
-//        em.persist(stream);
-//    }
-//
-//
-//
-//    public Stream findStreamByStreamId(Long streamId) {
-//        try {
-//            Stream stream = em.createQuery("SELECT s FROM Stream s WHERE s.id = :streamId", Stream.class)
-//                    .setParameter("streamId", streamId)
-//                    .getSingleResult();
-//            return stream;
-//        } catch (Exception ex) {
-//            System.out.println("???????" + ex.getMessage());
-//            throw new UserApplicationException(ErrorCode.NO_MATCHING_STREAM_FOUND_WITH_STREAMID);
-//        }
-//    }
-//}

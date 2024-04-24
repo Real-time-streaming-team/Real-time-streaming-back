@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HLS Stream</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>  <!-- hls.js 라이브러리 -->
+</head>
+<body>
+<video id="video" width="640" height="360" autoplay muted></video>  <!-- controls 속성을 제거 -->
+
+<script>
+  var video = document.getElementById('video');
+
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource('http://158.247.240.142:443/hls/1.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      video.play();
+    });
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = 'http://158.247.240.142:443/hls/1.m3u8';
+    video.play();
+  }
+</script>
+</body>
+</html>

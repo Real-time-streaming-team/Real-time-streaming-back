@@ -1,12 +1,13 @@
 package com.example.realtimestreaming.Domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@Builder
 public class Stream {
 
     @Id

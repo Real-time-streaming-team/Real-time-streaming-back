@@ -1,10 +1,13 @@
 package com.example.realtimestreaming.Service;
 
+import com.example.realtimestreaming.Domain.Stream;
 import com.example.realtimestreaming.Dto.Request.Stream.SendChatRequestDto;
 import com.example.realtimestreaming.Repository.StreamRepository;
 import com.example.realtimestreaming.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StreamService {
@@ -23,7 +26,9 @@ public class StreamService {
 
         // 스트리밍 존재 확인
         streamRepository.findByStreamId(streamId);
+    }
 
-
+    public List<Stream> getStreamList() {
+        streamRepository.find
     }
 }
