@@ -13,5 +13,4 @@ public class RealtimeStreamingApplication {
 	}
 
 	// jenkins 실험g123
-	// jenkins 실험12314212312
 }
