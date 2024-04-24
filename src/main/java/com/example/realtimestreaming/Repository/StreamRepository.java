@@ -14,4 +14,6 @@ import java.util.List;
 @Repository
 public interface StreamRepository extends JpaRepository<Stream, Long> {
     List<Stream> findByStreamId(Long streamId);
+
+
 }

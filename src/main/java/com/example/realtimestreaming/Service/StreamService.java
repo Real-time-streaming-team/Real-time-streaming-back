@@ -29,6 +29,6 @@ public class StreamService {
     }
 
     public List<Stream> getStreamList() {
-        streamRepository.find
+        return streamRepository.findAll();
     }
 }

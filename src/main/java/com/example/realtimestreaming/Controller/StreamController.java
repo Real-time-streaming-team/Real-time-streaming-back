@@ -3,6 +3,7 @@ package com.example.realtimestreaming.Controller;
 import com.example.realtimestreaming.Common.HTTP_INTERNAL_SERVER_ERROR;
 import com.example.realtimestreaming.Domain.Stream;
 import com.example.realtimestreaming.Dto.Request.Stream.SendChatRequestDto;
+import com.example.realtimestreaming.Dto.Response.Stream.GetStreamListResponseDto;
 import com.example.realtimestreaming.Service.StreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,13 +36,14 @@ public class StreamController {
     @Operation(summary = "스트리밍 리스트 전달")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
-                    content = {@Content(schema = @Schema(implementation = ))}),
+                    content = {@Content(schema = @Schema(implementation = GetStreamListResponseDto.class))}),
             @ApiResponse(responseCode = "500", description = "서버 에러",
                     content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
     })
-    @GetMapping("/sendChat/{streamId}")
-    public ResponseEntity<?> getStreamList() {
-        List<Stream> streams = streamService.getStreamList();
+    @GetMapping("/{streamId}")
+    public ResponseEntity<?> getStreamList(@PathVariable(name = "streamId") Long streamId) {
+//        List<Stream> streams = streamService.getStreamList();
+        return ResponseEntity.ok("success");
     }
 
     @Operation(summary = "채팅 전달")
