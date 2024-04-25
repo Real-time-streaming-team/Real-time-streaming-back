@@ -31,4 +31,9 @@ public class StreamService {
     public List<Stream> getStreamList() {
         return streamRepository.findAll();
     }
+
+    public List<Stream> streamSearch (String keyword) {
+        return streamRepository.findByTitleOrOwnerNickname(keyword);
+    }
+
 }

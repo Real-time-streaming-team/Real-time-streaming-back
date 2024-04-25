@@ -4,6 +4,7 @@ import com.example.realtimestreaming.Common.HTTP_INTERNAL_SERVER_ERROR;
 import com.example.realtimestreaming.Domain.Stream;
 import com.example.realtimestreaming.Dto.Request.Stream.SendChatRequestDto;
 import com.example.realtimestreaming.Dto.Response.Stream.GetStreamListResponseDto;
+import com.example.realtimestreaming.Dto.Response.Stream.StreamSearchListResponseDto;
 import com.example.realtimestreaming.Service.StreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,11 +15,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,6 +47,29 @@ public class StreamController {
         return ResponseEntity.ok("success");
     }
 
+    @Operation(summary = "스트리밍 검색")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {@Content(schema = @Schema(implementation = StreamSearchListResponseDto.class))}),
+            @ApiResponse(responseCode = "500", description = "서버 에러",
+                    content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
+    })
+    @GetMapping("search/{keyword}")
+    public ResponseEntity<StreamSearchListResponseDto> streamSearch(@PathVariable(name = "keyword") String title) {
+        List<Stream> streams = streamService.streamSearch(title);
+
+        StreamSearchListResponseDto streamSearchListRes = new StreamSearchListResponseDto();
+        List<StreamSearchListResponseDto.StreamSearchResponseDto> streamSearchList = new ArrayList<>();
+
+        for (Stream stream : streams) {
+            StreamSearchListResponseDto.StreamSearchResponseDto streamSearchResponseDto = new StreamSearchListResponseDto.StreamSearchResponseDto(stream);
+            streamSearchList.add(streamSearchResponseDto);
+        }
+        streamSearchListRes.setStreamSearchResponseDtoList(streamSearchList);
+
+        return ResponseEntity.ok(streamSearchListRes);
+    }
+
     @Operation(summary = "채팅 전달")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
@@ -69,7 +93,6 @@ public class StreamController {
         String destination = "/stream/" + streamId;
         this.messagingTemplate.convertAndSend(destination, sendChatRequestDto);
     }
-
 
 //    // 백앤드 디테일 페이지 로컬 실험
 //    @GetMapping("/{streamId}")
