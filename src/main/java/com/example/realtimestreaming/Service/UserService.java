@@ -1,12 +1,16 @@
 package com.example.realtimestreaming.Service;
 
+import com.example.realtimestreaming.Common.AESEncryption;
 import com.example.realtimestreaming.Common.ErrorCode;
 import com.example.realtimestreaming.Common.UserApplicationException;
+import com.example.realtimestreaming.Domain.Stream;
 import com.example.realtimestreaming.Domain.User;
 import com.example.realtimestreaming.Dto.Request.User.LoginRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.SignupRequestDto;
 import com.example.realtimestreaming.Dto.Response.User.LoginResponseDto;
+import com.example.realtimestreaming.Dto.Response.User.SignupResponseDto;
 import com.example.realtimestreaming.Provider.JwtTokenProvider;
+import com.example.realtimestreaming.Repository.StreamRepository;
 import com.example.realtimestreaming.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +34,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-//    // TODO 추후 보안 적용
-//    @Transactional
-//    public User signup(UserSignupDto request) {
-//        if (userRepository.existsByNickname(request.getNickname())) {
-//            throw new AlreadyExistsException(ErrorCode.NICKNAME_IS_DUPLICATED.getMessage());
-//        } else if (userRepository.existsByEmail(request.getEmail())) {
-//            throw new AlreadyExistsException(ErrorCode.EMAIL_IS_DUPLICATED.getMessage());
-//        }
-//
-//        var createdUser = userRepository.save(
-//                User.builder()
-//                        .nickname(request.getNickname())
-//                        .email(request.getEmail())
-//                        .password(request.getPassword())
-//                        .build()
-//        );
-//        return createdUser;
-//    }
+    private final StreamRepository streamRepository;
+
+    private final AESEncryption aesEncryption;
 
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -100,19 +89,32 @@ public class UserService {
     }
 
     @Transactional
-    public User signUp (SignupRequestDto signUpRequestDto) {
+    public SignupResponseDto signUp (SignupRequestDto signUpRequestDto) throws Exception {
         SignUpDuplicateCheck(signUpRequestDto);
         SignUpValidateCheck(signUpRequestDto);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(signUpRequestDto.getPassword());
-        var createdUser = userRepository.save(
+        User createdUser = userRepository.save(
                 User.builder()
                         .nickname(signUpRequestDto.getNickname())
                         .email(signUpRequestDto.getEmail())
                         .password(encodedPassword)
                         .build()
         );
-        return createdUser;
+
+        Stream createdStream = streamRepository.save(
+                Stream.builder()
+                        .owner(createdUser)
+                        .build()
+        );
+        String encryptStreamId = aesEncryption.encrypt(createdStream.getStreamId().toString());
+
+        createdStream.setStreamKey(encryptStreamId);
+        streamRepository.save(createdStream);
+        SignupResponseDto userResponseDto = new SignupResponseDto(createdUser);
+        userResponseDto.setStreamKey(encryptStreamId);
+
+        return userResponseDto;
     }
 
     public void validateLoginDto (LoginRequestDto loginDto) {

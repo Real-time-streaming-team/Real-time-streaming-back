@@ -6,6 +6,7 @@ import com.example.realtimestreaming.Dto.Request.User.LoginRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.SignupRequestDto;
 import com.example.realtimestreaming.Dto.Response.User.LoginResponseDto;
 import com.example.realtimestreaming.Dto.Response.User.SignupResponseDto;
+import com.example.realtimestreaming.Dto.Response.User.VerifyStreamKeyResponseDto;
 import com.example.realtimestreaming.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,11 +37,16 @@ public class UserController {
                     content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
     })
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto> signup (@RequestBody SignupRequestDto signUpRequestDto) {
-        System.out.println(signUpRequestDto);
-        User user = userService.signUp(signUpRequestDto);
-        SignupResponseDto userResponseDto = new SignupResponseDto(user);
-        return ResponseEntity.ok(userResponseDto);
+    public ResponseEntity<SignupResponseDto> signup (@RequestBody SignupRequestDto signUpRequestDto) throws Exception {
+        SignupResponseDto response = userService.signUp(signUpRequestDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("verify")
+    public ResponseEntity<?> verifyStreamKey (@RequestParam(name = "stream_key") String streamKey) {
+        VerifyStreamKeyResponseDto verifyStreamKeyResponseDto = new VerifyStreamKeyResponseDto();
+        verifyStreamKeyResponseDto.setFile_name("1");
+        return ResponseEntity.ok(verifyStreamKeyResponseDto);
     }
 
     @Operation(summary = "로그인")

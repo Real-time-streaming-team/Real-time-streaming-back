@@ -11,6 +11,7 @@ public class SignupResponseDto {
     private String email;
     private String password;
     private String nickname;
+    private String streamKey;
 
     public SignupResponseDto (User user) {
         this.userId = user.getUserId();

@@ -14,6 +14,8 @@ public class Stream {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long streamId;
 
+    private String streamKey;
+
     private String title;
 
     @ManyToOne
