@@ -5,6 +5,10 @@ import com.example.realtimestreaming.Dto.Request.Stream.SendChatRequestDto;
 import com.example.realtimestreaming.Repository.StreamRepository;
 import com.example.realtimestreaming.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +36,10 @@ public class StreamService {
         return streamRepository.findAll();
     }
 
-    public List<Stream> streamSearch (String keyword) {
-        return streamRepository.findByTitleOrOwnerNickname(keyword);
+    public Page<Stream> streamSearch (String keyword, Integer page) {
+        Integer size = 10;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+        return streamRepository.findByTitleOrOwnerNickname(keyword, pageable);
     }
 
 }

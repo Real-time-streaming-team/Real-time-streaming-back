@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -41,10 +42,20 @@ public class StreamController {
             @ApiResponse(responseCode = "500", description = "서버 에러",
                     content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
     })
-    @GetMapping("/{streamId}")
-    public ResponseEntity<?> getStreamList(@PathVariable(name = "streamId") Long streamId) {
-//        List<Stream> streams = streamService.getStreamList();
-        return ResponseEntity.ok("success");
+    @GetMapping("/list")
+    public ResponseEntity<GetStreamListResponseDto> getStreamList() {
+        List<Stream> streams = streamService.getStreamList();
+
+        GetStreamListResponseDto getStreamListRes = new GetStreamListResponseDto();
+        List<GetStreamListResponseDto.GetStreamResponseDto> getStreamList = new ArrayList<>();
+
+        for (Stream stream : streams) {
+            GetStreamListResponseDto.GetStreamResponseDto getStreamResponseDto = new GetStreamListResponseDto.GetStreamResponseDto(stream);
+            getStreamList.add(getStreamResponseDto);
+        }
+        getStreamListRes.setStreamList(getStreamList);
+
+        return ResponseEntity.ok(getStreamListRes);
     }
 
     @Operation(summary = "스트리밍 검색")
@@ -54,9 +65,9 @@ public class StreamController {
             @ApiResponse(responseCode = "500", description = "서버 에러",
                     content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
     })
-    @GetMapping("search/{keyword}")
-    public ResponseEntity<StreamSearchListResponseDto> streamSearch(@PathVariable(name = "keyword") String title) {
-        List<Stream> streams = streamService.streamSearch(title);
+    @GetMapping("search")
+    public ResponseEntity<?> streamSearch(@RequestParam("keyword") String keyword, @RequestParam("page") Integer page) {
+        Page<Stream> streams = streamService.streamSearch(keyword, page);
 
         StreamSearchListResponseDto streamSearchListRes = new StreamSearchListResponseDto();
         List<StreamSearchListResponseDto.StreamSearchResponseDto> streamSearchList = new ArrayList<>();
