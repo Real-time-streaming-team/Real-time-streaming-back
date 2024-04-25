@@ -65,7 +65,7 @@ public class StreamController {
             StreamSearchListResponseDto.StreamSearchResponseDto streamSearchResponseDto = new StreamSearchListResponseDto.StreamSearchResponseDto(stream);
             streamSearchList.add(streamSearchResponseDto);
         }
-        streamSearchListRes.setStreamSearchResponseDtoList(streamSearchList);
+        streamSearchListRes.setStreamList(streamSearchList);
 
         return ResponseEntity.ok(streamSearchListRes);
     }

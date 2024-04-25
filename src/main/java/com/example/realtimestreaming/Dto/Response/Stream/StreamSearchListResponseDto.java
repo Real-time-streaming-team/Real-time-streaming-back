@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class StreamSearchListResponseDto {
 
-    List<StreamSearchResponseDto> streamSearchResponseDtoList;
+    List<StreamSearchResponseDto> streamList;
 
     @Getter
     public static class StreamSearchResponseDto {
