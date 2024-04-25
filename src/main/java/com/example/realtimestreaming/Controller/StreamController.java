@@ -43,8 +43,8 @@ public class StreamController {
                     content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
     })
     @GetMapping("/list")
-    public ResponseEntity<GetStreamListResponseDto> getStreamList() {
-        List<Stream> streams = streamService.getStreamList();
+    public ResponseEntity<GetStreamListResponseDto> getStreamList(@RequestParam("page") Integer page) {
+        Page<Stream> streams = streamService.getStreamList(page);
 
         GetStreamListResponseDto getStreamListRes = new GetStreamListResponseDto();
         List<GetStreamListResponseDto.GetStreamResponseDto> getStreamList = new ArrayList<>();

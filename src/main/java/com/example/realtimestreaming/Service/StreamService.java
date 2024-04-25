@@ -32,8 +32,10 @@ public class StreamService {
         streamRepository.findByStreamId(streamId);
     }
 
-    public List<Stream> getStreamList() {
-        return streamRepository.findAll();
+    public Page<Stream> getStreamList(Integer page) {
+        Integer size = 10;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("title").ascending());
+        return streamRepository.findAll(pageable);
     }
 
     public Page<Stream> streamSearch (String keyword, Integer page) {
