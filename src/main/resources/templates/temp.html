@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Axios Example</title>
+    <!-- Axios 라이브러리 포함 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form id="signupForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <button type="submit">Sign Up</button>
+</form>
+
+<script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼 기본 동작 방지
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        axios.post('http://158.247.240.142:80/user/signup', {
+            username: username,
+            password: password
+        })
+        .then(function(response) {
+            console.log('Response:', response.data); // 응답 데이터 출력
+            alert('Sign up successful!');
+        })
+        .catch(function(error) {
+            console.error('Error:', error); // 오류 메시지 출력
+            alert('Sign up failed.');
+        });
+    });
+</script>
+</body>
+</html>

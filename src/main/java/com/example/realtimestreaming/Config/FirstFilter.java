@@ -17,6 +17,7 @@ public class FirstFilter implements Filter {
     static {
         ALLOWED_ORIGINS.add("http://158.247.240.142:3000/");
         ALLOWED_ORIGINS.add("http://49.142.106.179:3000"); // 허용하려는 다른 도메인 추가
+        ALLOWED_ORIGINS.add("http://124.46.240.195:63342");
     }
 
     @Override
