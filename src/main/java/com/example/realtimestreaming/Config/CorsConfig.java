@@ -6,6 +6,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
+
 @Configuration
 public class CorsConfig {
 
@@ -14,8 +22,12 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // 허용할 출처 설정
-        config.addAllowedOrigin("http://158.247.240.142:3000/");
+        // 여러 개의 출처를 허용하도록 설정
+        config.setAllowedOrigins(Arrays.asList(
+                "http://158.247.240.142:3000/",
+                "http://124.46.240.195:63342"
+        ));
+
         // 허용할 HTTP 메서드 설정
         config.addAllowedMethod("*");
         // 허용할 헤더 설정
