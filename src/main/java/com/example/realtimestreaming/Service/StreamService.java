@@ -26,7 +26,7 @@ public class StreamService {
         // 유저 존재 확인
         userRepository.findByUserId(sendChatRequestDto.getUserId());
 
-        System.out.println("어디서 오류가 나는거냐");
+//        System.out.println("어디서 오류가 나는거냐");
 
         // 스트리밍 존재 확인
         streamRepository.findByStreamId(streamId);

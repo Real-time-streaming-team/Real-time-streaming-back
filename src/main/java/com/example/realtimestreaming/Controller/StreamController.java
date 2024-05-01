@@ -105,6 +105,7 @@ public class StreamController {
         System.out.println(sendChatRequestDto.getContent());
         streamService.sendMessage(sendChatRequestDto, streamId);
         String destination = "/stream/" + streamId;
+        System.out.println("채팅 확인 " + sendChatRequestDto.getContent());
         this.messagingTemplate.convertAndSend(destination, sendChatRequestDto);
     }
 
