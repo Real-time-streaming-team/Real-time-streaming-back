@@ -19,25 +19,7 @@
 </form>
 
 <script>
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // 폼 기본 동작 방지
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        axios.post('http://158.247.240.142:80/user/signup', {
-            username: username,
-            password: password
-        })
-        .then(function(response) {
-            console.log('Response:', response.data); // 응답 데이터 출력
-            alert('Sign up successful!');
-        })
-        .catch(function(error) {
-            console.error('Error:', error); // 오류 메시지 출력
-            alert('Sign up failed.');
-        });
-    });
 </script>
 </body>
 </html>
