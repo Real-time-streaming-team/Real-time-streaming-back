@@ -10,7 +10,7 @@
 
         function connect() {
             // SockJS를 사용하여 서버에 연결
-            var socket = new SockJS('http://158.247.240.142:80/chat312');
+            var socket = new SockJS('http://158.247.240.142:80/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
