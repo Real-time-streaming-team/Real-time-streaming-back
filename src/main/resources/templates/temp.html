@@ -9,8 +9,12 @@
         var stompClient = null;
 
         function connect() {
-            // SockJS로 서버에 연결
-            var socket = new SockJS('http://158.247.240.142:80/chat'); // 인증 없음
+            // SockJS로 서버에 연결 (xhrFields로 withCredentials: false 설정)
+            var socket = new SockJS('http://158.247.240.142:80/chat', null, {
+                xhrFields: {
+                    withCredentials: false
+                }
+            });
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
