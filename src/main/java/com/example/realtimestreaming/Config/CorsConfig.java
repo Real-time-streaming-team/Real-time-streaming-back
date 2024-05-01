@@ -14,7 +14,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(false);
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("http://124.46.240.195:63342");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setMaxAge(6000L);
