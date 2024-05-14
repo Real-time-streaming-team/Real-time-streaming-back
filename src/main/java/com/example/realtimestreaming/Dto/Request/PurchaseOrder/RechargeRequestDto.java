@@ -7,8 +7,6 @@ import lombok.Getter;
 @Data
 public class RechargeRequestDto {
 
-    private Long purchaseOrderId;
-
     private String impUserId;
 
     private int paidAmount;

@@ -2,11 +2,14 @@ package com.example.realtimestreaming.Controller;
 
 import com.example.realtimestreaming.Common.HTTP_INTERNAL_SERVER_ERROR;
 import com.example.realtimestreaming.Domain.User;
+import com.example.realtimestreaming.Dto.Request.User.ChangeNicknameRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.LoginRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.SignupRequestDto;
+import com.example.realtimestreaming.Dto.Response.User.ChangeNicknameResponseDto;
 import com.example.realtimestreaming.Dto.Response.User.LoginResponseDto;
 import com.example.realtimestreaming.Dto.Response.User.SignupResponseDto;
 import com.example.realtimestreaming.Dto.Response.User.VerifyStreamKeyResponseDto;
+import com.example.realtimestreaming.Provider.JwtTokenProvider;
 import com.example.realtimestreaming.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,7 +30,7 @@ public class UserController {
 
     private final UserService userService;
 
-
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Operation(summary = "회원가입")
     @ApiResponses(value = {
@@ -62,4 +65,20 @@ public class UserController {
         return ResponseEntity.ok(loginResponse);
     }
 
+    @Operation(summary = "닉네임 변경")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {@Content(schema = @Schema(implementation = ChangeNicknameResponseDto.class))}),
+            @ApiResponse(responseCode = "500", description = "서버 에러",
+                    content = {@Content(schema = @Schema(implementation = HTTP_INTERNAL_SERVER_ERROR.class))}),
+    })
+    @PostMapping("/changeNickname")
+    public ResponseEntity<ChangeNicknameResponseDto> changeNickname (@RequestHeader("Authorization") String token, @RequestBody ChangeNicknameRequestDto changeNicknameRequestDto) throws Exception {
+        User user = jwtTokenProvider.validateToken(token);
+        User changedUser = userService.changeNickname(user.getUserId(), changeNicknameRequestDto);
+        ChangeNicknameResponseDto response = new ChangeNicknameResponseDto();
+        response.setNickname(changedUser.getNickname());
+        response.setUserId(changedUser.getUserId());
+        return ResponseEntity.ok(response);
+    }
 }

@@ -29,7 +29,6 @@ public class PurchaseOrderService {
                 PurchaseOrder.builder().
                         impUserId(rechargeRequestDto.getImpUserId())
                         .paidAmount(rechargeRequestDto.getPaidAmount())
-                        .purchaseOrderId(rechargeRequestDto.getPurchaseOrderId())
                         .payer(user)
                         .build()
         );

@@ -5,6 +5,7 @@ import com.example.realtimestreaming.Common.ErrorCode;
 import com.example.realtimestreaming.Common.UserApplicationException;
 import com.example.realtimestreaming.Domain.Stream;
 import com.example.realtimestreaming.Domain.User;
+import com.example.realtimestreaming.Dto.Request.User.ChangeNicknameRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.LoginRequestDto;
 import com.example.realtimestreaming.Dto.Request.User.SignupRequestDto;
 import com.example.realtimestreaming.Dto.Response.User.LoginResponseDto;
@@ -150,9 +151,17 @@ public class UserService {
         if (isSamePassword(loginRequestDto.getPassword(), user.getPassword()) == false) {
             throw new UserApplicationException(ErrorCode.NO_MATCHING_USER_FOUND_WITH_PASSWORD);
         }
-        String token = jwtTokenProvider.generateToken(user.getNickname());
+        String token = jwtTokenProvider.generateToken(user.getEmail());
         LoginResponseDto response = new LoginResponseDto(user);
         response.setToken(token);
         return response;
+    }
+
+    @Transactional
+    public User changeNickname (Long userId, ChangeNicknameRequestDto changeNicknameRequestDto) {
+        User user = userRepository.findByUserId(userId);
+        user.setNickname(changeNicknameRequestDto.getNickname());
+        userRepository.save(user);
+        return user;
     }
 }
